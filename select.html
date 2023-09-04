@@ -18,29 +18,19 @@
         <tbody id="content"></tbody>
     </table>
     <script>
-        window.addEventListener('load', function () {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'http://localhost/user-infos');
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == xhr.DONE) {
-                    if (xhr.status == 200) {
-                        const obj = JSON.parse(xhr.responseText);
-                        let html = '';
-
-                        for (let key of obj) {
-                            console.log(key);
-                            html += `<tr>`;
-                            html += `<td>${key.uiNum}</td>`;
-                            html += `<td>${key.uiName}</td>`;
-                            html += `<td>${key.uiId}</td>`;
-                            html += `<td>${key.uiPwd}</td>`;
-                            html += `</tr>`;
-                        }
-                        document.querySelector('#content').innerHTML = html;
-                    }
-                }
+        window.addEventListener('load', async function () {
+            const res = await fetch('http://localhost/user-infos');
+            const json = await res.json();
+            let html = '';
+            for (let obj of json) {
+                html += `<tr>`;
+                html += `<td>${obj.uiNum}</td>`;
+                html += `<td>${obj.uiName}</td>`;
+                html += `<td>${obj.uiId}</td>`;
+                html += `<td>${obj.uiPwd}</td>`;
+                html += `</tr>`;
             }
-            xhr.send();
+            document.querySelector('#content').innerHTML = html;
         })
 
     </script>
