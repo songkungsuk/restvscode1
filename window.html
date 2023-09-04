@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //window 대신에 this를 사용할수있다
+        //예제
+        function test(){
+            this.a = '1';
+            this.open = function(msg, name){
+                alert(`msg=${msg} and name=${name}`);
+            }
+        }
+        
+    </script>
+</body>
+</html>

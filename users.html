@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="rDiv"></div>
+    <script>
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost/api/users');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == xhr.DONE) {
+                if (xhr.status == 200) {
+                    console.log(xhr.responseText);
+                    const obj = JSON.parse(xhr.responseText);
+                    let html = '<table border="1">';
+                    html += '<tr>';
+                    html += `<td>번호</td>`;
+                    html += `<td>이름</td>`;
+                    html += `<td>나이</td>`;
+                    html += '</tr>';
+                    for (let i = 0; i < obj.length; i++) {
+                        html += '<tr>';
+                        html += `<td data-hungry=${obj[i].num}>${obj[i].num}</td>`;
+                        html += `<td>${obj[i].name}</td>`;
+                        html += `<td>${obj[i].age}</td>`;
+                        html += '</tr>';
+                    }
+                    html += '</table>';
+                    document.querySelector('#rDiv').innerHTML = html;
+                    const tds = document.querySelectorAll('td[data-hungry]');
+                    console.log(tds.length);
+                    for(const td of tds){
+                        td.onclick = function(){
+                            alert(this.innerText);
+                        }
+                    }
+
+                }
+            }
+        }
+        xhr.send();
+    </script>
+</body>
+
+</html>

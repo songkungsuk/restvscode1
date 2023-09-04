@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    이름 : <input type="text" id="uiName"><br>
+    아이디 : <input type="text" id="uiId" onchange="checkId(this)"><br>
+    비밀번호 : <input type="text" id="uiPwd"><br>
+    <button onclick="addUser()">등록</button>
+    <script>
+        async function checkId(obj){
+            await fetch(`http://localhost/user-info?uiId=${obj.value}`);
+            const users = await res.json();
+            if(users && users.length){
+                alert('등록이 불가능한 아이디입니다');
+                return;
+            }
+        }
+        async function addUser(){
+            const data = {
+                uiName : document.querySelector('#uiName').value,
+                uiId : document.querySelector('#uiId').value,
+                uiPwd : document.querySelector('#uiPwd').value
+            }
+            const json = JSON.stringify(data);
+            const res = await fetch('http://localhost/user-infos', {
+                method :'POST',
+                headers : {
+                    'Content-Type':'application/json;charset=UTF-8'
+                },
+                body : json
+            });
+            const result = await res.text();
+            if(result == 1){
+                alert('user append complete');
+                location.href='user-infos.html'
+            }
+        }
+    </script>
+    
+</body>
+</html>

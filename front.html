@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="rDiv"></div>
+    <script>
+        window.addEventListener('load', function () {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost/api/list'); //스프링으로 만든 서버의 포트가 80이고 Live Server의 포트는 5500이라 라이브 서버에서 요청할때는 전체 요소를 다 써줘야한다
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == xhr.DONE) {
+                    if (xhr.status == 200) {
+                        const obj = JSON.parse(xhr.responseText);
+                        let html = '<table border="1">';
+                        for (let i = 0; i < obj.length; i++) {
+                            html += '<tr>';
+                            html += `<td>${i + 1}</td>`;
+                            html += `<td>${obj[i]}</td>`; // "`" 이문자는 자바스크립트 el태그를 사용하기 위해서 사용하는것
+                            html += `</tr>`;
+                        }
+                        html += '</table>'
+                        document.querySelector('#rDiv').innerHTML = html;
+                    }
+
+                } else {
+                    console.log(xhr.responseText);
+                    document.querySelector('#rDiv').innerHTML = html;
+                }
+            }
+            xhr.send();
+        });
+    </script>
+</body>
+
+</html>

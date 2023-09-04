@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        window.addEventListener('load' ,async function () {
+            const res = await fetch('http://localhost/user-infos');
+            const result = res.json();
+            const data = JSON.stringify(result);
+            console.log(data);
+            localStorage.setItem('user', data);
+            location.href = 'check.html';
+        })
+    </script>
+</body>
+
+</html>

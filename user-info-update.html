@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    이름 : <input type="text" id="uiName">
+    아이디 : <input type="text" id="uiId">
+    비밀번호 : <input type="text" id="uiPwd">
+    <button onclick="userUpdate()">수정하기</button>
+    <script>
+        const url = new URL(location.href);
+        const param = url.searchParams;
+        const uiNum = param.get('uiNum');
+
+        async function userUpdate() {
+            const data = {
+                uiName: document.querySelector('#uiName').value,
+                uiId: document.querySelector('#uiId').value,
+                uiPwd: document.querySelector('#uiPwd').value,
+                uiNum: uiNum
+            }
+            const json = JSON.stringify(data);
+
+            const res = await fetch(`http://localhost/user-infos`,
+                {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    },
+                    body : json
+                });
+            const result = await res.text();
+            if (result == 1) {
+                alert('update complete');
+                location.href = 'user-infos.html';
+            }
+        }
+
+        window.addEventListener('load',async function(){
+            const res = await fetch(`http://localhost/user-infos/${uiNum}`);
+            const userinfo = await res.json();
+            console.log(userinfo);
+            for(let key in userinfo){
+                if(document.querySelector('#'+key)){
+                    document.querySelector('#'+ key).value =  userinfo[key];
+                }
+                
+            }
+        })
+    </script>
+</body>
+
+</html>

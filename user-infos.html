@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>select</title>
+    <title>Document</title>
 </head>
 
 <body>
@@ -13,10 +13,10 @@
             <td>번호</td>
             <td>이름</td>
             <td>아이디</td>
-            <td>비밀번호</td>
         </tr>
-        <tbody id="content"></tbody>
+        <tbody id="tbody"></tbody>
     </table>
+    <button onclick="location.href='user-info-insert.html'">등록</button><br>
     <script>
         window.addEventListener('load', function () {
             const xhr = new XMLHttpRequest();
@@ -24,25 +24,22 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == xhr.DONE) {
                     if (xhr.status == 200) {
-                        const obj = JSON.parse(xhr.responseText);
+                        let obj = JSON.parse(xhr.responseText);
                         let html = '';
-
+                        console.log(obj);
                         for (let key of obj) {
-                            console.log(key);
                             html += `<tr>`;
                             html += `<td>${key.uiNum}</td>`;
                             html += `<td>${key.uiName}</td>`;
-                            html += `<td>${key.uiId}</td>`;
-                            html += `<td>${key.uiPwd}</td>`;
+                            html += `<td><a href='user-info.html?uiNum=${key.uiNum}'>${key.uiId}</a></td>`;
                             html += `</tr>`;
                         }
-                        document.querySelector('#content').innerHTML = html;
+                        document.querySelector('#tbody').innerHTML = html;
                     }
                 }
             }
             xhr.send();
         })
-
     </script>
 </body>
 
