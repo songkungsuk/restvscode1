@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    이름 : <input type="text" id="uiName"> <br>
+    아이디 : <input type="text" id="uiId"> <br>
+    비밀번호 : <input type="password" id="uiPwd"> <br>
+    <button onclick="insertUserInfo()">등록</button>
+
+    <script>
+        async function insertUserInfo() {
+            const data = {
+                uiName: document.querySelector('#uiName').value,
+                uiId: document.querySelector('#uiId').value,
+                uiPwd: document.querySelector('#uiPwd').value
+            }
+            const json = JSON.stringify(data);
+
+            const res = await fetch('http://localhost/user-infos', {
+                method : 'POST',
+                headers : {
+                    'Content-Type':'application/json;charset=UTF-8'
+                },
+                body : json 
+            });
+
+            const result = await res.text();
+            if(result == 1){
+                alert('등록이 완료 되었습니다');
+                location.href = '/select.html';
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

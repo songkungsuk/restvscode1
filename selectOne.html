@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    selectOne
+    <table border="1">
+        <tr>
+            <td>번호</td>
+            <td id="uiNum"></td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td id="uiName"></td>
+        </tr>
+        <tr>
+            <td>아이디</td>
+            <td id="uiId"></td>
+        </tr>
+        <tr>
+            <td>비밀번호</td>
+            <td id="uiPwd"></td>
+        </tr>
+    </table>
+    <button onclick="location.href='/updateUserInfo.html'">수정</button>
+    <button onclick="deleteUserInfo()">삭제</button>
+    <script>
+        const url = new URL(location.href);
+        const params = url.searchParams;
+        const uiNum = params.get('uiNum');
+
+        window.addEventListener('load', async function(){
+            const res = await fetch(`http://localhost/user-infos/${uiNum}`); //풀경로를써주는이유는 라이브서버와 스프링부트에서 사용하는 포트번호가 서로 다르기 때문..
+            const json = await res.json(); //비동기는중요한것이다 .. 지멋대로실행해버려서 결과를알수가없음ㅋㅋㅋ
+            console.log(json);
+            for(let key in json){
+                console.log(key);
+                if(document.querySelector('#'+key)){
+                    console.log(document.querySelector('#'+key));
+                    document.querySelector('#'+key).innerText = json[key];
+                }
+            }
+
+        });
+
+        async function updateUserInfo(){
+
+        }
+
+        async function deleteUserInfo(){
+
+        }
+    </script>
+</body>
+</html>
