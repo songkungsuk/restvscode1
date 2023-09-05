@@ -1,14 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     이름 : <input type="text" id="uiName">
     아이디 : <input type="text" id="uiId">
     비밀번호 : <input type="text" id="uiPwd">
-    <button>수정하기</button>
+    <button onclick="updateUserInfo()">수정하기</button>
+
+    <script>
+        const url = new URL(location.href);
+        const params = url.searchParams
+        const uiNum = params.get('uiNum');
+
+        window.addEventListener('load', function () {
+
+            selectUserInfo();
+        })
+
+        async function selectUserInfo() {
+            const res = await fetch(`http://localhost/user-infos/${uiNum}`);
+            const json = await res.json();
+
+            for (let key in json) {
+                if (document.querySelector('#' + key)) {
+                    document.querySelector('#' + key).value = json[key];
+                }
+            }
+        }
+
+        async function updateUserInfo() {
+            const data = {
+                uiNum: uiNum,
+                uiName: document.querySelector('#uiName').value,
+                uiId: document.querySelector('#uiId').value,
+                uiPwd: document.querySelector('#uiPwd').value
+            }
+
+            const json = JSON.stringify(data);//객체를 json 형태의 string 바꿈.
+
+            const res = await fetch(`http://localhost/user-infos`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF8'
+                },
+                body: json
+            })
+
+            const result = await res.text();
+            if(result == 1){
+                alert('수정이 완료 되었습니다.');
+                location.href=`selectOne.html?uiNum=${uiNum}`;
+            }
+
+        }
+    </script>
 </body>
+
 </html>

@@ -17,7 +17,7 @@
         </tr>
         <tbody id="content"></tbody>
     </table>
-    <button onclick="location.href='/insertUserInfo.html'">유저 추가</button>
+    <button onclick="location.href='./insertUserInfo.html'">유저 추가</button>
     <script>
         window.addEventListener('load', async function () {
             const res = await fetch('http://localhost/user-infos');
@@ -26,7 +26,7 @@
             for (let obj of json) {
                 html += `<tr>`;
                 html += `<td>${obj.uiNum}</td>`;
-                html += `<td><a href='/selectOne.html?uiNum=${obj.uiNum}'>${obj.uiName}</a></td>`;
+                html += `<td><a href='./selectOne.html?uiNum=${obj.uiNum}'>${obj.uiName}</a></td>`;
                 html += `<td>${obj.uiId}</td>`;
                 html += `<td>${obj.uiPwd}</td>`;
                 html += `</tr>`;
