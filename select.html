@@ -20,7 +20,12 @@
     <button onclick="location.href='./insertUserInfo.html'">유저 추가</button>
     <script>
         window.addEventListener('load', async function () {
-            const res = await fetch('http://localhost/user-infos');
+            const res = await fetch('http://localhost/user-infos',{
+                method:'GET',
+                headers:{
+                    'Authorization':`${localStorage.getItem('token')}`
+                }
+            });
             const json = await res.json();
             let html = '';
             for (let obj of json) {
